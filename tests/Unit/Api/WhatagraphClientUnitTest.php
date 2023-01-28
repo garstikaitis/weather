@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Api\WhatagraphClientUnitTest;
+namespace Tests\Unit\Api;
 
 use Tests\TestCase;
 use Tests\TestHelpers;
@@ -12,7 +12,7 @@ class WhatagraphClientUnitTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        (new TestHelpers())->fakeHttpCalls();
+        (new TestHelpers())->fakeWhatagrapHttpCalls();
         $this->apiClient = new WhatagraphClient();
     }
 
@@ -22,14 +22,14 @@ class WhatagraphClientUnitTest extends TestCase
         $this->assertTrue(count($response) === 1);
         $metric = $response[0];
         $this->assertTrue($metric["id"] === 1);
-        $this->assertTrue($metric["external_id"] === "average_temp");
+        $this->assertTrue($metric["external_id"] === "averageTemp");
     }
 
     public function test_creates_metric()
     {
         $metric = $this->apiClient->createIntegrationMetric();
         $this->assertTrue($metric["id"] === 1);
-        $this->assertTrue($metric["external_id"] === "average_temp");
+        $this->assertTrue($metric["external_id"] === "averageTemp");
     }
 
     public function test_deletes_metric()
