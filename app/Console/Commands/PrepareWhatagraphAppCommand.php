@@ -38,7 +38,7 @@ class PrepareWhatagraphAppCommand extends Command
 
     private function createIntegrationMetric(): void
     {
-        $this->info(" Creating metric with external id: average_temp");
+        $this->info(" Creating metric with external id: averageTemp");
         $this->apiClient->createIntegrationMetric();
         $this->output->progressAdvance();
     }
