@@ -2,7 +2,6 @@
 
 namespace App\API;
 
-use Throwable;
 use App\Traits\NormalizesRequests;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
@@ -64,7 +63,7 @@ class WhatagraphClient
         $data = $this->httpClient
             ->post("/integration-metrics", [
                 "name" => "Average Temperature",
-                "external_id" => "average_temp",
+                "external_id" => "averageTemp",
                 "type" => "int",
                 "accumulator" => "sum",
                 "negative_ratio" => false,
@@ -87,48 +86,45 @@ class WhatagraphClient
     public function deleteIntegrationMetrics(
         Collection|array|int $metricIds
     ): bool {
-        try {
-            $metricIds = $this->normalizeRequest($metricIds);
-            $metricIds->each(function ($id) {
-                $this->httpClient
-                    ->delete("/integration-metrics/{$id}")
-                    ->json("data");
-            });
-            return true;
-        } catch (Throwable $e) {
-            return false;
-        }
+        $metricIds = $this->normalizeRequest($metricIds);
+        $metricIds->each(function ($id) {
+            $this->httpClient
+                ->delete("/integration-metrics/{$id}")
+                ->json("data");
+        });
+        return true;
     }
 
     public function deleteIntegrationDimensions(
         Collection|array|int $dimenstionIds
     ): bool {
-        try {
-            $dimenstionIds = $this->normalizeRequest($dimenstionIds);
-            $dimenstionIds->each(function ($id) {
-                $this->httpClient
-                    ->delete("/integration-dimensions/{$id}")
-                    ->json("data");
-            });
-            return true;
-        } catch (Throwable $e) {
-            return false;
-        }
+        $dimenstionIds = $this->normalizeRequest($dimenstionIds);
+        $dimenstionIds->each(function ($id) {
+            $this->httpClient
+                ->delete("/integration-dimensions/{$id}")
+                ->json("data");
+        });
+        return true;
     }
 
     public function deleteIntegrationSourceData(
         Collection|array|int $sourceDataIds
     ): bool {
-        try {
-            $sourceDataIds = $this->normalizeRequest($sourceDataIds);
-            $sourceDataIds->each(function ($id) {
-                $this->httpClient
-                    ->delete("/integration-source-data/{$id}")
-                    ->json("data");
-            });
-            return true;
-        } catch (Throwable $e) {
-            return false;
-        }
+        $sourceDataIds = $this->normalizeRequest($sourceDataIds);
+        $sourceDataIds->each(function ($id) {
+            $this->httpClient
+                ->delete("/integration-source-data/{$id}")
+                ->json("data");
+        });
+        return true;
+    }
+
+    public function createIntegrationSourceData($data)
+    {
+        return $this->httpClient
+            ->post("/integration-source-data/", [
+                "data" => $data,
+            ])
+            ->json("data");
     }
 }
