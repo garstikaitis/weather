@@ -72,7 +72,6 @@ class WipeWhatagraphAppDataCommand extends Command
             $this->info("Finished wiping data in app: {$appId}");
             return Command::SUCCESS;
         } catch (Throwable $e) {
-            dd($e);
             return Command::FAILURE;
         }
     }
