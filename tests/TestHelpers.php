@@ -12,7 +12,7 @@ class TestHelpers
      * Returns mocked Http responses based on URL
      * @return void
      */
-    public function fakeHttpCalls(): void
+    public function fakeWhatagrapHttpCalls(): void
     {
         $dimensionStub = base_path() . "/tests/stubs/dimensions.json";
         $metricStub = base_path() . "/tests/stubs/metric.json";
