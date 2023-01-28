@@ -23,7 +23,7 @@ class WhatagraphClient
         );
     }
 
-    public function getIntegrationMetrics(): mixed
+    public function getIntegrationMetrics(): array
     {
         $data = $this->httpClient
             ->get("/integration-metrics", [
@@ -35,7 +35,7 @@ class WhatagraphClient
         return $data;
     }
 
-    public function getIntegrationDimensions(): mixed
+    public function getIntegrationDimensions(): array
     {
         $data = $this->httpClient
             ->get("/integration-dimensions", [
@@ -47,7 +47,7 @@ class WhatagraphClient
         return $data;
     }
 
-    public function getIntegrationSourceData(): mixed
+    public function getIntegrationSourceData(): array
     {
         $data = $this->httpClient
             ->get("/integration-source-data", [
@@ -59,7 +59,7 @@ class WhatagraphClient
         return $data;
     }
 
-    public function createIntegrationMetric(): mixed
+    public function createIntegrationMetric(): array
     {
         $data = $this->httpClient
             ->post("/integration-metrics", [
@@ -72,7 +72,7 @@ class WhatagraphClient
             ->json("data");
         return $data;
     }
-    public function createIntegrationDimension(): mixed
+    public function createIntegrationDimension(): array
     {
         $data = $this->httpClient
             ->post("/integration-dimensions", [
@@ -96,7 +96,6 @@ class WhatagraphClient
             });
             return true;
         } catch (Throwable $e) {
-            dd($e);
             return false;
         }
     }
@@ -113,7 +112,6 @@ class WhatagraphClient
             });
             return true;
         } catch (Throwable $e) {
-            dd($e);
             return false;
         }
     }
@@ -130,7 +128,6 @@ class WhatagraphClient
             });
             return true;
         } catch (Throwable $e) {
-            dd($e);
             return false;
         }
     }
