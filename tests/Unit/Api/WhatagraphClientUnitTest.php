@@ -15,6 +15,7 @@ class WhatagraphClientUnitTest extends TestCase
         (new TestHelpers())->fakeHttpCalls();
         $this->apiClient = new WhatagraphClient();
     }
+
     public function test_returns_metrics()
     {
         $response = $this->apiClient->getIntegrationMetrics();
@@ -31,6 +32,12 @@ class WhatagraphClientUnitTest extends TestCase
         $this->assertTrue($metric["external_id"] === "average_temp");
     }
 
+    public function test_deletes_metric()
+    {
+        $response = $this->apiClient->deleteIntegrationMetrics(1);
+        $this->assertTrue($response);
+    }
+
     public function test_returns_dimensions()
     {
         $response = $this->apiClient->getIntegrationDimensions();
@@ -45,5 +52,11 @@ class WhatagraphClientUnitTest extends TestCase
         $dimension = $this->apiClient->createIntegrationDimension();
         $this->assertTrue($dimension["id"] === 1);
         $this->assertTrue($dimension["external_id"] === "city");
+    }
+
+    public function test_deletes_dimension()
+    {
+        $response = $this->apiClient->deleteIntegrationDimensions(1);
+        $this->assertTrue($response);
     }
 }

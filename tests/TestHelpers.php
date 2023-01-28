@@ -52,7 +52,21 @@ class TestHelpers
                 method: $request->method(),
                 stubPath: $stubPath
             ),
-            $request->method() === "GET" ? 200 : 201,
+            $this->getMockedResponseCode(method: $request->method()),
         ]);
+    }
+
+    /**
+     * Returns response code based on method
+     */
+    private function getMockedResponseCode(string $method): int
+    {
+        if ($method === "GET") {
+            return 200;
+        }
+        if ($method === "POST") {
+            return 201;
+        }
+        return 204;
     }
 }
