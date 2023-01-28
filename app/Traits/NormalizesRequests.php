@@ -15,6 +15,6 @@ trait NormalizesRequests
         if (is_array($resourceIds) && count($resourceIds)) {
             return collect([...$resourceIds]);
         }
-        return collect(...$resourceIds);
+        return $resourceIds;
     }
 }
