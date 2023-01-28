@@ -1,0 +1,12 @@
+[
+    {
+        "id": 1,
+        "external_id": "average_temp",
+        "name": "Average Temperature",
+        "type": "int",
+        "negative_ratio": false,
+        "options": {
+            "accumulator": "sum"
+        }
+    }
+]
