@@ -2,25 +2,48 @@
 
 namespace Tests\Unit\Api\WhatagraphClientUnitTest;
 
-use App\API\WhatagraphAPI;
 use Tests\TestCase;
+use Tests\TestHelpers;
 use App\API\WhatagraphClient;
-use Illuminate\Support\Facades\Http;
 
 class WhatagraphClientUnitTest extends TestCase
 {
+    private WhatagraphClient $apiClient;
+    public function setUp(): void
+    {
+        parent::setUp();
+        (new TestHelpers())->fakeHttpCalls();
+        $this->apiClient = new WhatagraphClient();
+    }
+    public function test_returns_metrics()
+    {
+        $response = $this->apiClient->getIntegrationMetrics();
+        $this->assertTrue(count($response) === 1);
+        $metric = $response[0];
+        $this->assertTrue($metric["id"] === 1);
+        $this->assertTrue($metric["external_id"] === "average_temp");
+    }
+
+    public function test_creates_metric()
+    {
+        $metric = $this->apiClient->createIntegrationMetric();
+        $this->assertTrue($metric["id"] === 1);
+        $this->assertTrue($metric["external_id"] === "average_temp");
+    }
+
     public function test_returns_dimensions()
     {
-        $stubPath = base_path() . "/tests/stubs/metric.json";
-        Http::fake([
-            "https://api.whatagraph.com/v1/*" => Http::response(
-                ["data" => json_decode(file_get_contents($stubPath))],
-                200
-            ),
-        ]);
-
-        $apiClient = new WhatagraphClient();
-        $response = $apiClient->getIntegrationMetrics();
+        $response = $this->apiClient->getIntegrationDimensions();
         $this->assertTrue(count($response) === 1);
+        $dimension = $response[0];
+        $this->assertTrue($dimension["id"] === 1);
+        $this->assertTrue($dimension["external_id"] === "city");
+    }
+
+    public function test_creates_dimension()
+    {
+        $dimension = $this->apiClient->createIntegrationDimension();
+        $this->assertTrue($dimension["id"] === 1);
+        $this->assertTrue($dimension["external_id"] === "city");
     }
 }
