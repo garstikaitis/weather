@@ -28,6 +28,7 @@ class OpenWeatherClientUnitTest extends TestCase
             ),
         ]);
         $response = $this->apiClient->getHistoricalWeatherForecast(1, 1, 10);
+        $this->assertCount(7, $response["list"]);
         $this->assertArrayHasKey("city", $response);
         $this->assertArrayHasKey("list", $response);
     }
