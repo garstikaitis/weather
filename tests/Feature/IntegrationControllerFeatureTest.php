@@ -4,7 +4,6 @@ namespace Tests\Unit\Api;
 
 use Tests\TestCase;
 use App\API\OpenWeatherClient;
-use Illuminate\Support\Facades\Http;
 use App\Formatters\OpenWeatherFormatter;
 use App\Actions\PushOpenWeatherDataToWhatagraph;
 

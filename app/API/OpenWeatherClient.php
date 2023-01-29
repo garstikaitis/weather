@@ -2,7 +2,9 @@
 
 namespace App\API;
 
+use Throwable;
 use Illuminate\Support\Facades\Http;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class OpenWeatherClient
 {
@@ -16,7 +18,14 @@ class OpenWeatherClient
         );
         $response = Http::get(
             "api.openweathermap.org/data/2.5/forecast/daily?lat={$latitude}&lon={$longtitude}&cnt={$daysCount}&appid={$openWeatherApiKey}"
-        )->json();
-        return $response;
+        );
+        if ($response->status() !== 200) {
+            $json = json_encode($response->json());
+            throw new HttpException(
+                $response->status(),
+                "Something went wrong with OpenWeather API. Data from API: {$json}"
+            );
+        }
+        return $response->json();
     }
 }

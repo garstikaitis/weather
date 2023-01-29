@@ -5,6 +5,7 @@ namespace App\API;
 use App\Traits\NormalizesRequests;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
+use Spatie\LaravelData\DataCollection;
 use Illuminate\Http\Client\PendingRequest as HttpClient;
 
 class WhatagraphClient
@@ -22,7 +23,7 @@ class WhatagraphClient
         );
     }
 
-    public function getIntegrationMetrics(): array
+    public function getIntegrationMetrics(): mixed
     {
         $data = $this->httpClient
             ->get("/integration-metrics", [
@@ -34,7 +35,7 @@ class WhatagraphClient
         return $data;
     }
 
-    public function getIntegrationDimensions(): array
+    public function getIntegrationDimensions(): mixed
     {
         $data = $this->httpClient
             ->get("/integration-dimensions", [
@@ -46,7 +47,7 @@ class WhatagraphClient
         return $data;
     }
 
-    public function getIntegrationSourceData(): array
+    public function getIntegrationSourceData(): mixed
     {
         $data = $this->httpClient
             ->get("/integration-source-data", [
@@ -58,7 +59,7 @@ class WhatagraphClient
         return $data;
     }
 
-    public function createIntegrationMetric(): array
+    public function createIntegrationMetric(): mixed
     {
         $data = $this->httpClient
             ->post("/integration-metrics", [
@@ -71,7 +72,7 @@ class WhatagraphClient
             ->json("data");
         return $data;
     }
-    public function createIntegrationDimension(): array
+    public function createIntegrationDimension(): mixed
     {
         $data = $this->httpClient
             ->post("/integration-dimensions", [
@@ -119,7 +120,7 @@ class WhatagraphClient
         return true;
     }
 
-    public function createIntegrationSourceData($data)
+    public function createIntegrationSourceData(DataCollection $data): mixed
     {
         return $this->httpClient
             ->post("/integration-source-data/", [

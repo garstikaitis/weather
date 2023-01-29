@@ -10,16 +10,18 @@ class IntegrationController extends Controller
     public function index(PushOpenWeatherDataToWhatagraph $action)
     {
         try {
+            $wasDataPushed = $action->handle();
             return response()->json(
                 [
-                    "data" => $action->handle(),
+                    "data" => $wasDataPushed,
                     "success" => true,
-                    "message" => "Successfuly pushed data",
+                    "message" => $wasDataPushed
+                        ? "Successfuly pushed data"
+                        : "No data was pushed",
                 ],
                 200
             );
         } catch (Throwable $e) {
-            dd($e);
             return response()->json(
                 [
                     "success" => true,

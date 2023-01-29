@@ -8,7 +8,7 @@ use Spatie\LaravelData\DataCollection;
 
 class PushOpenWeatherDataToWhatagraph
 {
-    /** @var WeatherData[] */
+    /** @var DataCollection<WeatherData> */
     public DataCollection $weatherData;
 
     public function __construct(
@@ -17,18 +17,23 @@ class PushOpenWeatherDataToWhatagraph
     ) {
     }
 
-    public function handle()
+    public function handle(): bool
     {
-        $this->getWeatherData();
+        $this->setWeatherData();
+        dd($this->weatherData);
+        if (!$this->weatherData->count()) {
+            return false;
+        }
         $this->pushWeatherDataToIntegrator();
         return true;
     }
 
-    private function getWeatherData()
+    private function setWeatherData(): void
     {
         $this->weatherData = $this->openWeatherService->getWeatherForecast();
     }
-    private function pushWeatherDataToIntegrator()
+
+    private function pushWeatherDataToIntegrator(): void
     {
         $this->whatagraphClient->createIntegrationSourceData(
             $this->weatherData
