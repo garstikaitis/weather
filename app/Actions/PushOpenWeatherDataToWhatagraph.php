@@ -20,7 +20,6 @@ class PushOpenWeatherDataToWhatagraph
     public function handle(): bool
     {
         $this->setWeatherData();
-        dd($this->weatherData);
         if (!$this->weatherData->count()) {
             return false;
         }
