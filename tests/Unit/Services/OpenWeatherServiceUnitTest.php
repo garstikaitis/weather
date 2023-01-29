@@ -2,10 +2,11 @@
 
 namespace Tests\Unit\Services;
 
+use Tests\TestCase;
 use App\API\OpenWeatherClient;
 use App\Services\OpenWeatherService;
+use ErrorException;
 use Spatie\LaravelData\DataCollection;
-use Tests\TestCase;
 
 class OpenWeatherServiceUnitTest extends TestCase
 {
@@ -13,6 +14,10 @@ class OpenWeatherServiceUnitTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+    }
+
+    public function tests_returns_correctly_formatted_data()
+    {
         $openWeatherStub = base_path() . "/tests/stubs/open_weather.json";
         $mock = $this->mock(OpenWeatherClient::class)
             ->shouldReceive("getHistoricalWeatherForecast")
@@ -26,10 +31,6 @@ class OpenWeatherServiceUnitTest extends TestCase
 
         app()->instance(OpenWeatherClient::class, $mock);
         $this->service = app()->make(OpenWeatherService::class);
-    }
-
-    public function tests_returns_correctly_formatted_data()
-    {
         $response = $this->service->getWeatherForecast();
         $this->assertTrue(get_class($response) === DataCollection::class);
         $this->assertCount(7, $response);
@@ -39,5 +40,22 @@ class OpenWeatherServiceUnitTest extends TestCase
         $this->assertObjectHasAttribute("maxTemp", $temperatureData);
         $this->assertObjectHasAttribute("date", $temperatureData);
         $this->assertObjectHasAttribute("averageTemp", $temperatureData);
+    }
+
+    public function test_throws_exception_when_api_returns_not_200()
+    {
+        $this->expectException(ErrorException::class);
+        $mock = $this->mock(OpenWeatherClient::class)
+            ->shouldReceive("getHistoricalWeatherForecast")
+            ->andReturn([])
+            ->getMock();
+
+        app()->instance(OpenWeatherClient::class, $mock);
+        $this->service = app()->make(OpenWeatherService::class);
+
+        $this->service->getWeatherForecast();
+        $this->assertTrue(
+            $this->getExpectedExceptionMessage() === "Misformatted data."
+        );
     }
 }
