@@ -41,7 +41,7 @@ class TestHelpers
     }
 
     /**
-     * returns mocked Http response instance.
+     * Returns mocked Http response instance.
      */
     private function getMockedResponse(
         Request $request,

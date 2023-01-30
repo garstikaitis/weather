@@ -13,7 +13,11 @@ class OpenWeatherService
     {
     }
 
-    public function getWeatherForecast(): DataCollection
+    /**
+     * Get OpenWeather data and format it to WeatherData structure
+     * @return DataCollection<WeatherData>
+     */
+    public function getWeatherForecast()
     {
         $data = $this->client->getHistoricalWeatherForecast();
         if (!$data && !count($data)) {

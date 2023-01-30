@@ -8,6 +8,9 @@ use Spatie\LaravelData\Support\DataProperty;
 
 class KelvinToCelsiusCast implements Cast
 {
+    /**
+     * Converts temperature from Kelvin to Celsius
+     */
     public function cast(
         DataProperty $property,
         mixed $value,

@@ -9,6 +9,9 @@ use App\Data\Casts\WeatherTimestampToCarbonCast;
 
 class WeatherData extends Data
 {
+    /**
+     * Builds a data structure that eventually will be sent to Whatagraph API.
+     */
     public function __construct(
         public string $city,
         #[WithCast(WeatherTimestampToCarbonCast::class)] public string $date,

@@ -9,8 +9,8 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 class OpenWeatherClient
 {
     public function getHistoricalWeatherForecast(
-        float|string $latitude = 54.898521,
-        string|float $longtitude = 23.903597,
+        float|string $latitude = 54.898521, // Kaunas latitude
+        string|float $longtitude = 23.903597, // Kaunas longtitude
         int $daysCount = 10
     ): mixed {
         $openWeatherApiKey = config(

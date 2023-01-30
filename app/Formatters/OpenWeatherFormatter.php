@@ -9,7 +9,11 @@ use ErrorException;
 
 class OpenWeatherFormatter
 {
-    public static function format(mixed $data): DataCollection
+    /**
+     * Formats OpenWeather data to WeatherData structure
+     * @return DataCollection<WeatherData>[]
+     */
+    public static function format(mixed $data)
     {
         if (!$data) {
             return WeatherData::collection([]);
@@ -28,7 +32,6 @@ class OpenWeatherFormatter
             ];
         }, $data["list"]);
 
-        /** @var DataCollection<WeatherData> */
         return WeatherData::collection($weather);
     }
 }

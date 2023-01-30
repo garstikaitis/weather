@@ -10,6 +10,7 @@ class IntegrationController extends Controller
     public function index(PushOpenWeatherDataToWhatagraph $action)
     {
         try {
+            // Call a reusable action that pushes weather data to whatagraph
             $wasDataPushed = $action->handle();
             return response()->json(
                 [
